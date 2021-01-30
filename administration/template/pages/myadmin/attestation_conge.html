@@ -1,0 +1,24 @@
+{% extends 'base/document.html' %}
+
+{% load static %}
+
+{% block document %}
+<div class="titre">
+    <h2 class="bold">Attestation de Conge Exceptionnel</h2>
+</div>
+
+<div class="demande">
+    <div class="info-demandeur">
+        <p>Comme suite à sa demande du <span class="date-demande">{{ conge.date_add|date:"d/m/Y" }}</span></p>
+        <p>Monsieur/Madame <span class="bold">{{ conge.nom }} {{ conge.nom }}</span></p>
+        <p>Fonction: <span class="bold">{{ conge.fonction }}</span></p>
+        <p>Matricule : <span class="bold">{{ conge.matricule }}</span></p>
+        <p>Service CBCG de Cocody</p>
+        <p>Est autorisée à prendre un congé exceptionnel</p>
+        <p>Allant du <span id="date-debut" class="bold">{{ conge.datedebut|date:"d/m/Y" }}</span> au <span id="date-fin" class="bold">{{ conge.datefin|date:"d/m/Y" }}</span></p>
+        <p>Pour se rendre à <span id="destination" class="bold">{{ conge.destination }}</span></p>
+        <p>Motif : <span class="bold">{{ conge.motif }}</span></p>
+    </div>
+</div>
+
+{% endblock %}

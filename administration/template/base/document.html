@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Aperçu - Attestation de travail</title>
+        <link rel="stylesheet" media="screen" href="{% static 'myadmin/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'myadmin/css/print.css' %}" media="print">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="apercu">
+                <div class="document">
+                    <div class="en-tete">
+                        <div class="ministere bold uppercase">
+                            SECRETARIAT D’ETAT AUPRES DU MINISTRE DE L’EDUCATION NATIONALE DE L’ENSEIGNEMENT TECHNIQUE ET DE LA FORMATION PROFESSIONNELLE CHARGE DE L’ENSEIGNEMENT TECHNIQUE ET DE LA FORMATION PROFESSIONNELLE
+                        </div>
+                        <div class="rci">
+                            <p class="bold uppercase">REPUBLIQUE DE COTE D’IVOIRE</p>
+                            <p class="dotted-line">..................</p>
+                            <p class="bold uppercase italic">UNION – DISCIPLINE – TRAVAIL</p>
+                        </div>
+                    </div>
+
+                    <div class="contenu">
+                        <div class="en-tete">
+                            <div class="cbcg">
+                                <p class="dotted-line">..................</p>
+                                <p class="uppercase bold">DIRECTION REGIONALE ABIDJAN-NORD</p>
+                                <div>
+                                    <div class="logo"><img src="{% static 'myadmin/images/logo_cbcg.png' %}" alt="logo_cbcg"></div>
+                                    <div class="adresse">
+                                        <p class="bold">09 BP 3573 Abidjan 09</p>
+                                        <p class="bold">Tel: 22-44-90-17</p>
+                                        <p class="bold">CBCG COCODY</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="date">
+                                <p class="bold italic">Abidjan, le <span class="bold italic" id="date"></span></p>
+                            </div>
+                        </div>
+
+                        {% block document %}
+
+                        {% endblock %}
+                       
+                    </div>
+
+                    <div class="signature">
+                        <p>Le Directeur</p>
+                        <p>KONE ABDOULAYE F.</p>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <a href="{% url 'myadmin:home' %}"><button id="cancel">Annuler</button></a>
+                    <button id="print">Imprimer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCRIPT -->
+        <script src="{% static 'myadmin/scripts/document.js' %}"></script>
+    </body>
+</html>

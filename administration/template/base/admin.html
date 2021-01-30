@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Administration cbcg - Tableau de bord</title>
+        <link rel="stylesheet" href="{% static 'myadmin/css/style.css' %}">
+        <script src="https://kit.fontawesome.com/d3eb5df1d1.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <header class="header">
+                <div class="logo">
+                    <a href="{% url 'myadmin:home' %}">
+                        <img src="{% static 'myadmin/images/logo_cbcg.png' %}" alt="logo_cbcg">
+                        <span>Administration</span>
+                    </a>
+                </div>
+                <nav class="nav-bar">
+                    <div class="notification hasnotifications dropdown">
+                        <div class="dropdown-head"><i class="far fa-bell">Icon</i></div>
+                        <div class="dropdown-content">
+                            <div class="head">
+                                <div class="title">Notifications</div>
+                                <a href="{% url 'myadmin:alldelete' %}"><div class="clear">Tout Effacer</div></a>
+                                
+                            </div>
+                            <div class="notification-items">
+                                
+                                
+                                {% for item in notifications %}
+                                <div  class="item">
+                                <a title="Detail" href="{% if item.type_demande == 'travail' %} {% url 'myadmin:attestationtravail' item.demande_id %}{% elif item.type_demande == 'service'%} {% url 'myadmin:certificatservice' item.demande_id %} {% else %} {% url 'myadmin:attestationconge' item.demande_id %} {% endif %}" >
+                                    <!--<div class="user-img">AN</div> -->
+                                    <div class="notification-details">
+                                        <p class="notification-title">{{ item.titre }}</p>
+                                        <p class="notification-date"> - {{ item.date_add|date:"d M Y" }} à {{ item.date_add|date:"H:i:s" }}</p>
+                                    </div>
+                                </a>
+                                <a href="{% url 'myadmin:deletenotification' item.id %} ">
+                                    <div class="trash" title="supprimer"><i class="far fa-trash-alt"></i></div>
+                                </a>
+                                </div>
+                                {% endfor %}
+                               
+                                <!--
+                                <div  class="item">
+                
+                                    <div class="notification-details">
+                                        <p class="notification-title">Aucune notification</p>
+                                    </div>
+                                </div>
+                                -->
+                                
+                            </div>
+                            <!--<div class="footer">Tout Voir</div> -->
+                        </div>
+                    </div>
+                    <div class="admin-profil dropdown">
+                        <div class="dropdown-head">
+                            <div class="admin-img"><img {% if request.user.administrateur.photo %} src="{{ request.user.administrateur.photo.url }}" {% else %}  src="" {% endif %} alt="admin_image"></div>
+                            <div class="admin-details">
+                                <p class="name">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                                <p class="work">{{ request.user.administrateur.fonction }}</p>
+                            </div>   
+                        </div>
+                        <div class="dropdown-content">
+                            <a href="{% url 'myadmin:compte' %}"><i class="fas fa-user-circle"></i><span>Mon Compte</span></a>
+                            <a href="{% url 'myadmin:logout' %}"><i class="fas fa-sign-out-alt"></i><span>Déconnexion</span></a>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+           {% block admin %}
+
+            {% endblock %}
+            <footer class="footer">
+                <p>© - 2020 CBCG Cocody | Développé par T.Inc</p>
+            </footer>
+        </div>
+
+        <!-- SCRIPTS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- JQuery -->
+        <script src="{% static 'myadmin/scripts/datatables.js' %}"></script>
+        <script src="{% static 'myadmin/scripts/table.js' %}"></script>
+        <script src="{% static 'myadmin/scripts/admin.js' %}"></script>
+        <script src="{% static 'myadmin/scripts/compte.js' %}"></script>
+
+    </body>
+</html>

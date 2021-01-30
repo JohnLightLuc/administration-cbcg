@@ -1,0 +1,31 @@
+{% extends 'base/document.html' %}
+
+{% load static %}
+
+{% block document %}
+<div class="titre">
+    <h2 class="bold">Attestation de travail</h2>
+</div>
+
+<div class="demande">
+    <div class="info-directeur">
+        <p>Je soussigné <span class="bold"> M. Kouakou Alain</span></p>
+        <p>Matricule : <span class="bold"> D54666 D</span></p>
+        <p>Emploi : <span class="bold">Enseignant</span></p>
+        <p>Grade : <span class="bold">A5</span></p>
+        <p>Fonction : <span class="bold">Chef d’Etablissement</span></p>
+    </div>
+
+    <div class="info-demandeur">
+        <p>Atteste que <span class="bold">{{ certi_travail.nom }} {{ certi_travail.prenom }}</span></p>
+        <p>Matricule : <span class="bold">{{ certi_travail.matricule }}</span></p>
+        <p>Emploi : <span class="bold">{{ certi_travail.emploi }}</span></p>
+        <p>Grade : <span class="bold">{{ certi_travail.grade }}</span></p>
+    </div>
+
+    <div class="texte-demande">
+        <p>Est à son poste de travail depuis le 02 Octobre 2001date de sa mutation au <span class="bold">C</span>entre de <span class="bold">B</span>ureautique de <span class="bold">C</span>ommunication et de <span class="bold">G</span>estion (CBCG) de Cocody, En foi de quoi, la présente attestation de travail lui est délivrée pour servir et valoir ce que de droit.</p>
+    </div>
+</div>
+
+{% endblock %}

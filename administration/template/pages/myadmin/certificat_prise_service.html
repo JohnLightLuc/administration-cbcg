@@ -1,0 +1,33 @@
+{% extends 'base/document.html' %}
+
+{% load static %}
+
+{% block document %}
+<div class="titre">
+    <h2 class="bold">Certificat de Prise de Service</h2>
+</div>
+
+<div class="demande">
+    <div class="info-directeur">
+        <p>Je soussigné</p>
+        <p>Monsieur <span class="bold">KONE Abdoulaye Fofana</span></p>
+        <p>Matricule : <span class="bold">275 465 F</span></p>
+        <p>Emploi : <span class="bold">Inspecteur Principal</span></p>
+        <p>Grade : <span class="bold">A5</span></p>
+        <p>Fonction : <span class="bold">Chef d’Etablissement</span></p>
+    </div>
+
+    <div class="info-demandeur">
+        <p>Atteste que <span class="bold">{{ service.nom }} {{ service.nom }}</span></p>
+        <p>Matricule : <span class="bold">{{ service.matricule }}</span></p>
+        <p>Emploi : <span class="bold">{{ service.emploi }}</span></p>
+        <p>Grade : <span class="bold">{{ service.grade }}</span></p>
+    </div>
+
+    <div class="texte-demande">
+        <p>Précédemment en service au <span class="bold">C</span>entre de <span class="bold">B</span>ureautique de <span class="bold">C</span>ommunication et de <span class="bold">G</span>estion de Cocody en qualité de Professeur de <span class="bold">Comptabilité</span>, admis au concours exceptionnel d’accès aux fonctions d’<span class="bold">Inspecteur Principal</span>, session 2017, par arrêté <span class="bold">N°04418139701/MFP/DGFP/DC</span> du 06 Décembre 2018 et maintenu au CBCG de Cocody, a pris service le 12 Novembre 2018</p>
+        <p>En foi de quoi, le présent certificat de prise de service est délivré pour servir et valoir ce que de droit</p>
+    </div>
+</div>
+
+{% endblock %}

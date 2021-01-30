@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CBCG Cocody | Connexion</title>
+        <link rel="stylesheet" href="{% static 'demande/css/style.css' %}">
+    </head>
+    <body>
+        <div id="wrapper">
+            <header class="header">
+                <div class="logo">
+                    <a href="#">
+                        <img src="{% static 'demande/images/logo_cbcg.png' %}" alt="logo_cbcg">
+                    </a>
+                </div>
+            </header>
+            <div class="main-block">
+                <div class="div-1st">
+                    <div class="welcome">
+                        <div class="title">Faites l'expérience du digital dans l'administration</div>
+                        <p class="sub-title">Cette plateforme vous permet de faire des demandes de documents administratifs relatifs au CBCG de Cocody</p>
+                    </div>
+                    <div class="ads">
+                        <img src="{% static 'demande/images/image_processing20190916-31718-zt4jjw.gif' %}" alt="pub">
+                    </div>
+                </div>
+
+                {% block connexion %}
+
+                {% endblock %}
+            </div>
+            <footer class="footer">
+                <p>&COPY; - 2020 CBCG Cocody</p>
+                <p>Développé par T.Inc</p>
+            </footer>
+        </div>
+    </body>
+</html>

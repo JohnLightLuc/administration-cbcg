@@ -1,0 +1,75 @@
+{% extends 'base/demande.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet"  href="{% static 'demande/css/style.css' %}">
+{% endblock %}
+
+{% block demande %}
+<div class="main-block">
+    <div class="div-1st">
+        <div class="welcome">
+            <div class="title">Bienvenue sur votre espace...</div>
+            <p class="sub-title">
+                Faites votre demande en trois (03) étapes simples :
+            </p>
+            <ol>
+                <li>Choisir le document dans la section &laquo; <strong>Documents</strong> &raquo;</li>
+                <li>Remplir le formulaire</li>
+                <li>Cliquer sur &laquo; <strong>FAIRE LE DEMANDE</strong> &raquo;</li>
+
+            </ol>
+        </div>
+        <div class="ads">
+            <img src="{% static 'demande/images/image_processing20190916-31718-zt4jjw.gif' %}" alt="pub">
+        </div>
+    </div>
+
+    <div class="div-2nd">
+        <div id="forms">
+            <form action="{% url 'demande:service' %}" method="POST" class="form">
+                {% csrf_token %}
+                {% if statut %}
+                <p style="color:green;text-align: center;">{{ message }}</p>
+                {% else %}
+                <p style="color:red; text-align: center;">{{ message }}</p>
+                {% endif %}
+                <div>
+                    <h3 class="h3 form-title">Certificat de prise de service</h3>
+                    <div class="input">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" value="{{ nom }}">
+                    </div>
+                    <div class="input">
+                        <label for="prenom">Prénom-s</label>
+                        <input type="text" id="prenom" name="prenom" value="{{ prenom }}">
+                    </div>
+                    <div class="input">
+                        <label for="matricule">Matricule</label>
+                        <input type="text" id="matricule" name="matricule" value="{{ matricule }}">
+                    </div>
+                    <div class="input">
+                        <label for="emploi">Emploi</label>
+                        <input type="text" id="emploi" name="emploi" value="{{ emploi }}">
+                    </div>
+                    <div class="input">
+                        <label for="grade">Grade</label>
+                        <input type="text" id="grade" name="grade" value="{{ grade }}">
+                    </div>
+                    
+                    <div class="ads">
+                        <img src="{% static 'demande/images/image_processing20191008-23162-kf264i.gif' %}" alt="pub">
+                    </div>
+
+                    <button type="submit" class="btn btn-form">Faire la demande</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="https://kit.fontawesome.com/d3eb5df1d1.js" crossorigin="anonymous"></script>
+<script src="{% static 'demande/scripts/dropdown.js' %}"></script>
+{% endblock %}

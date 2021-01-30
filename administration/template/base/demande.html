@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Espace de demande de documents </title>
+        
+        
+        {% block style %}
+        
+        {% endblock %}
+    </head>
+    </head>
+    <body>
+        <div id="wrapper">
+            <header class="header">
+                <div class="logo">
+                    <a href="{% url 'demande:index' %}">
+                        <img src="{% static 'demande/images/logo_cbcg.png' %}" alt="logo_cbcg">
+                    </a>
+                </div>
+                <nav id="nav">
+                    <div class="dropdown">
+                        <p class="title"><i class="far fa-file-alt"></i>Documents</p>
+                        <div class="document_type">
+                            <a href="{% url 'demande:travail' %}">Attestation de travail</a>
+                            <a href="{% url 'demande:service' %}">Certificat de prise de service</a>
+                            <a href="{% url 'demande:attestation' %}">Attestation de congé exceptionnel</a>
+                        </div>
+                    </div>
+                    <div class="hello" style="font-weight: bold;">
+                        <a href="{% url 'demande:compte' %}" title="Mon Compte">Compte</a>
+
+                    </div>
+                    
+                    <div class="hello">
+                        
+                            Bonjour <span class="gender">{{ request.user.professeur.civilite }}</span> <span class="username">{{ request.user.first_name }} {{ request.user.last_name }}</span>
+                    
+                    </div>
+                    <a href="{% url 'demande:logout' %}"><div class="logout" title="Se déconnecter"></div></a>
+                </nav>
+            </header>
+            
+
+                {% block demande %}
+
+                {% endblock %}
+                
+  
+            <footer class="footer">
+                <p>&COPY; - 2020 CBCG Cocody</p>
+                <p>Développé par T.Inc</p>
+            </footer>
+        </div>
+
+        
+        <!-- SCRIPTS -->
+        {% block js %}
+        
+        {% endblock %}
+       
+    </body>
+</html>

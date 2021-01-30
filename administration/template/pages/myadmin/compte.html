@@ -1,0 +1,82 @@
+{% extends 'base/admin.html' %}
+
+{% load static %}
+
+{% block admin %}
+
+<div id="main-block">
+    <div class="date-pageTitle">
+        <div class="page-title"><font>Mon Compte</font></div>
+        <div class="date">
+            <span id="date">Mardi, 02 décembre 2020</span>
+            <span class="icon"><i class="far fa-calendar-alt"></i></span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><font>Paramètre du Compte</font></div>
+        <div class="section-content">
+            <form action="{% url 'myadmin:compte' %}" method="POST" id="compte" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if response %}
+                    {% if statut %}
+                    <p style="color:green; text-align: center;">{{ message }}</p>
+                    {% else %}
+                    <p style="color:red; text-align: center;">{{ message }}</p>
+                    {% endif %}
+                {% endif %}
+                <div class="profile-img">
+                    <div class="cadre-img">
+                        <img {% if request.user.administrateur.photo %} src="{{ request.user.administrateur.photo.url }}" {% else %}  src="" {% endif %} alt="photo_de_profil">
+                    </div>
+                    <button id="update-img" class="btn">Modifier la photo</button><br>
+                    <input type="file" name="profileImg" id="profileImg" accept=".png,.jpg,.jpeg">
+                </div>
+                <div class="nameAndPassword">
+                    <div class="current-info">
+                        <div class="input">
+                            <label for="nom">Nom</label> 
+                            <input type="text" value="{{ request.user.first_name }}" readonly id="nom">
+                        </div>
+                        <div class="input">
+                            <label for="prenom">Prénom-s</label>
+                            <input type="text" value="{{ request.user.last_name }}" readonly id="prenom">
+                        </div>
+                        <!--
+                        <div class="input">
+                            <label for="password">Mot de Passe</label>
+                            <input type="password" value="KonanKONK42354T" readonly id="password">
+                        </div>
+                        -->
+
+                        <button id="update-btn" class="btn" type="button">Modifier le Mot de Passe</button>
+                    </div>
+
+                    <div id="update-password">
+                        <!--<div class="input">
+                            <label for="old-password">Ancien Mot de Passe</label>
+                            <input type="password" id="old-password">
+                        </div>
+                        -->
+                        <div class="input">
+                            <label for="new-password">Nouveau Mot de Passe</label>
+                            <input type="password" name="password" id="new-password" value="{{ password }}">
+                        </div>
+                        <div class="input">
+                            <label for="new-password-twice">Répétez le Nouveau Mot de Passe</label>
+                            <input type="password" name="repassword" id="new-password-twice" value="{{ repassword }}">
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button id="reset" class="btn" type="reset" type="reset">Annuler</button>
+                        <button id="submit" class="btn" type="submit">Enregistrer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

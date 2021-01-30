@@ -1,0 +1,40 @@
+{% extends 'base/connexion.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet"  href="{% static 'demande/css/style.css' %}">
+{% endblock %}
+
+{% block connexion %}
+
+  
+<div class="div-2nd">
+    <div id="forms">
+        <form action="{% url 'demande:connexion' %}" method="POST" class="form">
+            {% csrf_token %}
+            {% if statut %}
+            <p style="color:red; text-align: center;">{{ message }}</p>
+            {% endif %}
+            <div id="login">
+                <h3 class="h3 form-title">Connexion</h3>
+                <input type="text" placeholder="username" name="username" id="id" value="{{ username }}">
+
+                <input type="password" placeholder="Mot de passe" name="password" id="password" value="{{ password }}">
+                <input type="hidden"  name="next"  value="{{ request.GET.next }}{{ next }}">
+                
+                <div class="ads">
+                    <img src="{% static 'demande/images/image_processing20191008-23162-kf264i.gif' %}" alt="pub">
+                </div>
+
+                <button type="submit" class="btn btn-form">Se connecter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="https://kit.fontawesome.com/d3eb5df1d1.js" crossorigin="anonymous"></script>
+<script src="{% static 'demande/scripts/dropdown.js' %}"></script>
+{% endblock %}

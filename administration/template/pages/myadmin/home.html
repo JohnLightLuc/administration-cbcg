@@ -1,0 +1,114 @@
+{% extends 'base/admin.html' %}
+
+{% load static %}
+
+{% block admin %}
+<div id="main-block">
+                <div class="date-pageTitle">
+                    <div class="page-title"><font>Tableau de bord</font></div>
+                    <div class="date">
+                        <span id="date">Mardi, 02 décembre 2020</span>
+                        <span class="icon"><i class="far fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><font>Statistiques</font></div>
+                    <div class="blocks">
+                        <div class="block">
+                            <div class="text">
+                                <div class="block-title"><font>Toutes les Demandes</font></div>
+                                <div class="number">{{ total }}</div>
+                            </div>
+                            <div class="illustration"><i class="far fa-file-alt"></i></div>
+                        </div>
+                        <div class="block">
+                            <div class="text">
+                                <div class="block-title"><font>Demandes traitées</font></div>
+                                <div class="number">{{ nbre_traite }}</div>
+                            </div>
+                            <div class="illustration"><i class="fas fa-file-signature"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title"><font>Tableau des demandes</font></div>
+                    <div class="datatable">
+                        <table id="datatable" class="display">
+                            <thead>
+                                <tr>
+                                    <th colspan="1" rowspan="1" class="order">Nom</th>
+                                    <th colspan="1" rowspan="1">Prénom-s</th>
+                                    <th colspan="1" rowspan="1">Demande</th>
+                                    <th colspan="1" rowspan="1" class="order">Etat</th>
+                                    <th colspan="1" rowspan="1" class="order">Date</th>
+                                    <th colspan="1" rowspan="1">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+    
+                                {% for item in demandes %}
+
+                                <!-- Attestation de conge -->
+                                {% if forloop.first %}
+                                {% for conge in item %}
+                                <tr>
+                                    <td>{{ conge.prof.user.first_name }}</td>
+                                    <td>{{ conge.prof.user.last_name }}</td>
+                                    <td>Attestation de congé exceptionnel</td>
+                                    <td> <span {% if conge.etat == 'Traité' %} class="state processed" {% elif conge.etat == 'Annulé' %} class="statut pending"  {% else %} class="state pending" {% endif %}>{{ conge.etat }}</span> </td>
+                                    <td>{{ conge.date_add|date:"d M Y H:i:s" }}</td>
+                                    <td>
+                                        <a href="{% url 'myadmin:attestationconge' conge.id %}" title="Voir"><i class="far fa-eye">Detail</i></a>
+                                        <a href="{% url 'myadmin:supconge' conge.id %}" title="Supprimer"><i class="far fa-trash-alt">Supprimer</i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% endif %}
+
+                                <!-- Attestation de travail -->
+                                {% if forloop.counter == 2 %}
+                                {% for travail in item %}
+                                <tr>
+                                    <td>{{ travail.prof.user.first_name }}</td>
+                                    <td>{{ travail.prof.user.last_name }}</td>
+                                    <td>Certificat de travail</td>
+                                    <td><span {% if travail.etat == 'Traité' %} class="state processed" {% elif travail.etat == 'Annulé' %} class="statut pending"  {% else %} class="state pending" {% endif %}>{{ travail.etat }}</span></td>
+                                    <td>{{ travail.date_add|date:"d M Y H:i:s" }}</td>
+                                    <td>
+                                        <a href="{% url 'myadmin:attestationtravail' travail.id %}" title="Voir"><i class="far fa-eye">Detail</i></a>
+                                        <a href="{% url 'myadmin:suptraval' travail.id %}" title="Supprimer"><i class="far fa-trash-alt">Supprimer</i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% endif %}
+                                <!-- end Attestation de travail -->
+
+                                <!-- Attestation de service -->
+                                {% if forloop.counter == 3 %}
+                                {% for service in item %}
+                                <tr>
+                                    <td>{{ service.prof.user.first_name }}</td>
+                                    <td>{{ service.prof.user.last_name }}</td>
+                                    <td>Attestation de prise de service</td>
+                                    <td><span {% if service.etat == 'Traité' %} class="state processed" {% elif service.etat == 'Annulé' %} class="statut pending" {% else %} class="state pending" {% endif %}>{{ service.etat }}</span></td>
+                                    <td>{{ service.date_add|date:"d M Y H:i:s" }}</td>
+                                    <td>
+                                        <a href="{% url 'myadmin:certificatservice' service.id %}" title="Voir"><i class="far fa-eye">Detail</i></a>
+                                        <a href="{% url 'myadmin:supservice' service.id %}" title="Supprimer"><i class="far fa-trash-alt">Supprimer</i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% endif %}
+                                <!-- end Attestation de service -->
+
+                                {% endfor %}
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+{% endblock %}

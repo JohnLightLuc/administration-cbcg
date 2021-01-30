@@ -1,0 +1,32 @@
+{% extends 'base/demande.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet"  href="{% static 'demande/css/style.css' %}">
+{% endblock %}
+{% block demande %}
+<div class="main-block">
+    <div class="div-1st">
+        <div class="welcome">
+            <div class="title">Bienvenue sur votre espace...</div>
+            <p class="sub-title">
+                Faites votre demande en trois (03) étapes simples :
+            </p>
+            <ol>
+                <li>Choisir le document dans la section &laquo; <strong>Documents</strong> &raquo;</li>
+                <li>Remplir le formulaire</li>
+                <li>Cliquer sur &laquo; <strong>FAIRE LE DEMANDE</strong> &raquo;</li>
+
+            </ol>
+        </div>
+        <div class="ads">
+            <img src="{% static 'demande/images/image_processing20190916-31718-zt4jjw.gif' %}" alt="pub">
+        </div>
+    </div>
+    <div class="div-2nd"></div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://kit.fontawesome.com/d3eb5df1d1.js" crossorigin="anonymous"></script>
+<script src="{% static 'demande/scripts/dropdown.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,167 @@
+{% extends 'base/demande.html' %}
+{% load static %}
+
+
+{%block style %}
+    <link rel="stylesheet"  href="{% static 'demande/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'myadmin/css/style.css' %}">
+    <script src="https://kit.fontawesome.com/d3eb5df1d1.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block demande %}
+
+  <div id="main-block" class="compte">
+    <div class="date-pageTitle">
+        <div class="page-title"><font>Mon Compte</font></div>
+        <div class="date">
+            <span id="date">Mardi, 02 décembre 2020</span>
+            <span class="icon"><i class="far fa-calendar-alt"></i></span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><font>Mes Demandes</font></div>
+        <div class="section-content">
+            <div class="table-block datatable">
+                <table id="datatable" class="display">
+                    <thead>
+                        <tr>
+                            <th colspan="1" rowspan="1" class="order">Demande</th>
+                            <th colspan="1" rowspan="1" class="order">Date de Demande</th>
+                            <th colspan="1" rowspan="1" class="order">Statut Demande</th>
+                            <th colspan="1" rowspan="1" class="order">Dernière mise à jour</th>
+                            <th colspan="1" rowspan="1">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in demandes %}
+
+                        <!-- Attestation de conge -->
+                        {% if forloop.first %}
+                        {% for conge in item %}
+                        <tr>
+                            <td>Attestation de congé exceptionnel</td>
+                            <td>{{ conge.date_add|date:"d M Y " }}</td>
+                            <td> <span {% if conge.etat == 'Traité' %} class="state processed"{% elif conge.etat == 'Annulé' %} class="statut pending"  {% else %} class="state pending" {% endif %}>{{ conge.etat }}</span> </td>
+                            <td>{{ conge.date_update|date:"d M Y " }}</td>
+                            <td>
+                                {% if conge.etat == 'Traité' or conge.etat == 'Annulé' %}<span style="cursor: not-allowed;" class="statut pending">Annuler</span>{% else %} <a href="{% url 'demande:annuleconge' conge.id %}"><span title="Annuler la demande" class="cancel">Annuler</span></a> {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+
+                        <!-- Attestation de travail -->
+                        {% if forloop.counter == 2 %}
+                        {% for travail in item %}
+                        <tr>
+                           
+                            <td>Certificat de travail</td>
+                            <td>{{ travail.date_add|date:"d M Y " }}</td>
+                            <td><span {% if travail.etat == 'Traité' %} class="state processed" {% elif travail.etat == 'Annulé' %} class="statut pending"  {% else %} class="state pending" {% endif %}>{{ travail.etat }}</span></td>
+                            <td>{{ travail.date_update|date:"d M Y " }}</td>
+                            <td>
+                                {% if travail.etat == 'Traité' or travail.etat == 'Annulé'  %}<span style="cursor: not-allowed;" class="statut pending">Annuler</span>{% else %}<a href="{% url 'demande:annuletravail' travail.id %}"> <span title="Annuler la demande" class="cancel">Annuler</span></a> {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                        <!-- end Attestation de travail -->
+
+                        <!-- Attestation de service -->
+                        {% if forloop.counter == 3 %}
+                        {% for service in item %}
+                        <tr>
+                            
+                            <td>Attestation de prise de service</td>
+                            <td>{{ service.date_add|date:"d M Y " }}</td>
+                            <td><span {% if service.etat == 'Traité' %} class="state processed"{% elif service.etat == 'Annulé' %} class="statut pending" {% else %} class="state pending" {% endif %}>{{ service.etat }}</span></td>
+                            <td>{{ service.date_update|date:"d M Y" }}</td>
+                            <td>
+                                {% if service.etat == 'Traité' or service.etat == 'Annulé'  %}<span style="cursor: not-allowed;"  class="statut pending">Annuler</span>{% else %} <a href="{% url 'demande:annuleservice' service.id %}"><span title="Annuler la demande" class="cancel">Annuler</span> </a>{% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                        <!-- end Attestation de service -->
+
+                        {% endfor %}
+                       
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title"><font>Paramètre du Compte</font></div>
+        <div class="section-content">
+            <form action="{% url 'demande:update' %}" method="POST" id="compte">
+                {% csrf_token %}
+                {% if response %}
+                    {% if statut %}
+                    <p style="color:green; text-align: center;">{{ message }}</p>
+                    {% else %}
+                    <p style="color:red; text-align: center;">{{ message }}</p>
+                    {% endif %}
+                {% endif %}
+                <div class="nameAndPassword">
+                    <div class="current-info">
+                        <div class="input">
+                            <label for="nom">Nom</label>
+                            <input type="text" value="Aka" readonly id="nom">
+                        </div>
+                        <div class="input">
+                            <label for="prenom">Prénom-s</label>
+                            <input type="text" value="Joël" readonly id="prenom">
+                        </div>
+                        <div class="input">
+                            <label for="">Année de Prise de Service</label>
+                            <div class="sub-input">
+                                <input type="text" value="{{ anneepriseservice }}" readonly id="">
+                                <button class="btn" id="update-year" type="button" job="year">Modifier l'année</button>
+                                <input type="month" name="mois" id="annee-service" value="{{ anneepriseservice }}">
+                            </div>
+                        </div>
+                        <div class="input">
+                            <label for="password">Mot de Passe</label>
+                            <input type="password"  value="KonanKONK42354T" readonly id="password">
+                        </div>
+
+                        <button id="update-btn" class="btn" type="button" job="password">Modifier le mot de passe</button>
+                    </div>
+
+                    <div id="update-password">
+                        <div class="input">
+                            <label for="old-password">Ancien Mot de Passe</label>
+                            <input type="password" id="old-password">
+                        </div>
+                        <div class="input">
+                            <label for="new-password">Nouveau Mot de Passe</label>
+                            <input type="password" name="password" id="new-password">
+                        </div>
+                        <div class="input">
+                            <label for="new-password-twice">Répétez le Nouveau Mot de Passe</label>
+                            <input type="password" name="repassword" id="new-password-twice">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="reset" class="btn" type="reset" type="reset">Annuler les modifications</button>
+                    <button id="submit" class="btn" type="submit">Enregistrer les modifications</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- JQuery -->
+<script src="{% static 'myadmin/scripts/dropdown.js' %}"></script>
+<script src="{% static 'myadmin/scripts/compte.js' %}"></script>
+<script src="{% static 'myadmin/scripts/datatables.js' %}"></script>
+<script src="{% static 'myadmin/scripts/table.js' %}"></script>
+
+{% endblock %}
